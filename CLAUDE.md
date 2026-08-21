@@ -8,10 +8,12 @@ load, on any device, through any instrument. The product of this repository is
 
 ```bash
 pip install -e ".[dev]"
-make test          # 61 tests, well under a second
+make test          # 111 tests across five tiers, ~5s
+make smoke         # 5 tests, ~1s — run this first on a new machine
 make demo          # a synthetic six-minute soak, in simulated time
-make qa            # ruff, strict mypy, coverage gate
-python -m pytest tests/test_thermal.py -k noise    # single test
+make qa            # ruff, strict mypy, bandit, pip-audit, coverage >= 90%
+python -m pytest tests/unit/test_thermal.py -k noise    # single test
+python -m pytest -m pentest                             # one tier
 ```
 
 ## Where things are
@@ -30,8 +32,21 @@ python -m pytest tests/test_thermal.py -k noise    # single test
 | `thermal.py` | The throttle detector and its anti-noise rule. |
 | `report.py` | The artefact and its digest. |
 | `energy_model.py` | Export downstream, and refuse to launder a rehearsal as a measurement. |
+| `tests/smoke/` | Does it start at all. Subprocess-level, one second. |
+| `tests/unit/` | One behaviour of one module, at its boundary. |
+| `tests/functional/` | One test per requirement in the functional spec. |
+| `tests/security/` | Input the harness did not produce; disclosure; no `eval`. |
+| `tests/pentest/` | Attacks on the claim, including two that succeed. |
+| `docs/GETTING_STARTED.md` | Neophyte path: no terminal experience assumed. |
+| `docs/FUNCTIONAL_SPEC.md` | Actors, FR-1…FR-10, acceptance criteria. |
+| `docs/TECHNICAL_REFERENCE.md` | Module by module, every artefact field. |
+| `docs/ARCHITECTURE.md` | Why it is shaped this way; what was rejected. |
 | `docs/METHOD.md` | What a run does, in order, and why. |
 | `docs/REPORT_FORMAT.md` | Every field of every artefact. |
+| `docs/BARE_METAL.md` | Real meter, real board: wiring, permissions, calibration. |
+| `docs/THREAT_MODEL.md` | Adversaries P1–P3, residual risks R-1…R-5. |
+| `docs/CLAIM_MAP.md` | Claim → implementation → the test that proves it. |
+| `docs/TEST_STRATEGY.md` | The five tiers and what each is for. |
 
 ## Invariants — do not break these without an ADR
 
@@ -51,6 +66,24 @@ python -m pytest tests/test_thermal.py -k noise    # single test
    string invalidates every report. Breaking changes get `/v2`.
 9. **No runtime dependencies.** The bench machine is always the awkward one.
 
+## The delivery standard
+
+Every deliverable in this repository ships with all of the following. This is the
+standing default, not a per-task decision — a change that adds behaviour without
+its documentation and its tiers is unfinished, not fast.
+
+1. **Technical documentation** — module by module, every artefact field.
+2. **Functional documentation** — actors, numbered requirements, acceptance
+   criteria, written so someone who never reads the source can check a claim.
+3. **A neophyte path** — a guide assuming no terminal, no Python, no git.
+4. **A bare-metal run** — how it works on real hardware with no container.
+5. **A full test harness** — smoke, unit, functional, security and pen-test
+   tiers, each selectable, each with a stated purpose.
+6. **A QA gate** — lint, strict types, SAST, dependency advisories, coverage.
+   Everything in it fails the build.
+7. **A threat model with residual risks**, each pinned by a test that
+   demonstrates the gap rather than hiding it.
+
 ## Conventions
 
 **Tests assert on the figures, not the log.** Constant power for one second
@@ -58,6 +91,12 @@ integrates to exactly that many joules; a single slow window is not a throttle.
 
 **Write the negative test first.** Refusals, insufficient samples, backwards
 timestamps, edited reports.
+
+**A pen-test that only passes is a pen-test written afterwards.** Where an attack
+succeeds, the test says so and names the residual risk. Two currently do.
+
+**The tier is the directory.** `tests/<tier>/` gets the marker automatically at
+collection. Do not add `pytestmark` by hand.
 
 **Docstrings carry the argument, not the mechanics.** Why a control exists and
 what it costs. Keep the register.

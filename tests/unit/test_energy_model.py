@@ -50,10 +50,8 @@ def test_the_export_carries_a_per_operation_error_bar(measured_report):
     assert export_energy_model(measured_report).uncertainty_j_per_operation > 0
 
 
-def test_a_throttled_run_says_so_in_the_source_string():
-    from tests.conftest import build_report
-
-    report = build_report("measured", slowdown=30.0, windows=5, window_s=30.0)
+def test_a_throttled_run_says_so_in_the_source_string(report_factory):
+    report = report_factory("measured", slowdown=30.0, windows=5, window_s=30.0)
     assert report.body["thermal"]["throttled"] is True
     export = export_energy_model(report)
     assert "throughput regressed" in export.source

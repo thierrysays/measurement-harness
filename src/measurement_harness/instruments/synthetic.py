@@ -68,7 +68,11 @@ class SyntheticInstrument:
     ) -> None:
         self.profile = profile or SyntheticProfile()
         self._seed = seed
-        self._rng = random.Random(seed)
+        # nosec B311 — a seeded Mersenne Twister is exactly what is wanted here.
+        # This generator produces measurement *noise* for a source that is
+        # labelled synthetic and refused downstream; reproducibility from a seed
+        # is the requirement, and unpredictability would defeat it.
+        self._rng = random.Random(seed)  # nosec B311
         self._clock = clock or SystemClock()
         self._duty = 0.0
         self._mark = 0.0
@@ -106,7 +110,7 @@ class SyntheticInstrument:
 
     def open(self) -> None:
         self._open = True
-        self._rng = random.Random(self._seed)
+        self._rng = random.Random(self._seed)  # nosec B311 — see __init__
         self._mark = self._clock.monotonic()
         self._busy_s = 0.0
         self._interval_s = 0.0

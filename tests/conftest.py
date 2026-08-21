@@ -1,3 +1,6 @@
+import os
+import pathlib
+
 import pytest
 
 from measurement_harness.clock import ManualClock
@@ -64,6 +67,12 @@ def build_report(
 
 
 @pytest.fixture
+def report_factory():
+    """Build a report to order: provenance, slowdown, window count."""
+    return build_report
+
+
+@pytest.fixture
 def synthetic_report() -> Report:
     return build_report("synthetic")
 
@@ -71,3 +80,32 @@ def synthetic_report() -> Report:
 @pytest.fixture
 def measured_report() -> Report:
     return build_report("measured")
+
+
+@pytest.fixture
+def cli_env() -> dict[str, str]:
+    """Environment for a subprocess that must find the package.
+
+    The end-to-end tiers run the CLI as a real process rather than calling
+    ``main()``, because a tool that only works when imported by its own test
+    suite is a tool nobody can run. This keeps that honest whether the package
+    was installed with ``pip install -e .`` or is merely on ``PYTHONPATH``.
+    """
+    src = str(pathlib.Path(__file__).resolve().parent.parent / "src")
+    env = dict(os.environ)
+    env["PYTHONPATH"] = src + os.pathsep + env.get("PYTHONPATH", "")
+    return env
+
+
+# The tier a test belongs to is the directory it sits in. Applying the marker
+# from the path rather than by hand means a test cannot be moved into a tier
+# and keep the old label, which is the way tier markers usually rot.
+_TIERS = {"unit", "functional", "smoke", "security", "pentest"}
+
+
+def pytest_collection_modifyitems(items) -> None:
+    for item in items:
+        for part in pathlib.Path(str(item.fspath)).parts:
+            if part in _TIERS:
+                item.add_marker(getattr(pytest.mark, part))
+                break

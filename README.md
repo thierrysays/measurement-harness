@@ -149,6 +149,47 @@ part that says how much to believe it.
 
 ---
 
+## Documentation
+
+| For | Read |
+|---|---|
+| Never used a terminal, want to see it work | [GETTING_STARTED.md](docs/GETTING_STARTED.md) — assumes nothing, twenty minutes, no hardware |
+| What it does and what counts as working | [FUNCTIONAL_SPEC.md](docs/FUNCTIONAL_SPEC.md) — actors, FR-1…FR-10, acceptance criteria |
+| Writing code against it | [TECHNICAL_REFERENCE.md](docs/TECHNICAL_REFERENCE.md) — module by module, every artefact field |
+| Why it is shaped this way | [ARCHITECTURE.md](docs/ARCHITECTURE.md) — the argument, and what was rejected |
+| The method behind the numbers | [METHOD.md](docs/METHOD.md) — run order, integration, the throttle rule |
+| The artefact format | [REPORT_FORMAT.md](docs/REPORT_FORMAT.md) — `report/v1` and `energy-model/v1` |
+| Putting a real meter on a real board | [BARE_METAL.md](docs/BARE_METAL.md) — wiring, bus permissions, calibration |
+| What is defended and what is not | [THREAT_MODEL.md](docs/THREAT_MODEL.md) — adversaries P1–P3, residual risks R-1…R-5 |
+| Every claim and the test that proves it | [CLAIM_MAP.md](docs/CLAIM_MAP.md) |
+| How the suite is organised | [TEST_STRATEGY.md](docs/TEST_STRATEGY.md) — five tiers and the gate |
+| Decisions and their cost | [docs/adr/](docs/adr/) |
+
+---
+
+## The test harness
+
+Five tiers, each answering a different question. The tier a test belongs to is
+the directory it lives in, and the marker is applied from the path — so a test
+cannot be moved between tiers and keep an old label.
+
+```
+make smoke        # does it start at all                     5 tests
+make unit         # each part at its boundary               61 tests
+make functional   # the specification, end to end           22 tests
+make security     # input it did not produce                14 tests
+make pentest      # attacks on the claim                    19 tests
+make test         # all of it                              111 tests
+make qa           # ruff, mypy --strict, bandit, pip-audit, coverage >= 90%
+```
+
+The pen-test tier includes two tests that pass **by demonstrating a gap**: a
+fully recomputed forgery verifies, and an instrument that understates current is
+believed. Both are residual risks R-1 and R-2, and a pen-test suite containing
+only attacks the system survives is a suite written after the fact.
+
+---
+
 ## What this is not
 
 - **Not a governance tool.** It measures; it does not decide whether a workload

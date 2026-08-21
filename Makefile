@@ -1,7 +1,29 @@
-.PHONY: test demo lint types qa clean
+.PHONY: test smoke unit functional security pentest demo lint types sast audit cover qa clean docs
+
+# ------------------------------------------------------------------ the tiers
+# Each answers a different question. See docs/TEST_STRATEGY.md.
 
 test:
 	python -m pytest
+
+smoke:
+	python -m pytest -m smoke
+
+unit:
+	python -m pytest -m unit
+
+functional:
+	python -m pytest -m functional
+
+security:
+	python -m pytest -m security
+
+pentest:
+	python -m pytest -m pentest
+
+# ------------------------------------------------------------------- the demo
+# A six-minute soak in simulated time. The seed is fixed so the run exercises
+# the throttle path; do not change it to make an output look better.
 
 demo:
 	python -m measurement_harness.cli run \
@@ -9,17 +31,31 @@ demo:
 		--latency-ms 20 --slowdown 18 --droop 8 --seed 12 \
 		--out ./run/report.json
 	python -m measurement_harness.cli verify ./run/report.json
-	python -m measurement_harness.cli energy-model ./run/report.json --allow-synthetic
+	@echo
+	@echo "and now the part that refuses:"
+	-python -m measurement_harness.cli energy-model ./run/report.json
+
+# ------------------------------------------------------------------- the gate
+# `make qa` is what CI runs. Everything in it fails the build; nothing prints a
+# warning and continues, because a warning nobody must act on is unread.
 
 lint:
-	ruff check src tests
+	python -m ruff check src tests
 
 types:
-	mypy
+	python -m mypy
 
-qa: lint types
+sast:
+	python -m bandit -q -r src
+
+audit:
+	python -m pip_audit --progress-spinner off
+
+cover:
 	python -m pytest --cov=measurement_harness --cov-report=term-missing --cov-fail-under=90
 
+qa: lint types sast audit cover
+
 clean:
-	rm -rf run .pytest_cache .mypy_cache .coverage
+	rm -rf run .pytest_cache .mypy_cache .ruff_cache .coverage htmlcov
 	find . -name __pycache__ -type d -exec rm -rf {} +

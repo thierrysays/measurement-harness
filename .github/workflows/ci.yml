@@ -6,20 +6,72 @@ on:
   pull_request:
 
 jobs:
-  test:
+  # Fastest signal first: if the package does not start, nothing else matters.
+  smoke:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install -e ".[dev]"
+      - run: make smoke
+
+  tiers:
+    needs: smoke
     runs-on: ubuntu-latest
     strategy:
+      fail-fast: false
       matrix:
-        python-version: ["3.10", "3.12"]
+        python-version: ["3.10", "3.11", "3.12"]
+        tier: [unit, functional, security, pentest]
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
           python-version: ${{ matrix.python-version }}
       - run: pip install -e ".[dev]"
-      - run: ruff check src tests
-      - run: mypy
-      - run: python -m pytest --cov=measurement_harness --cov-report=term-missing --cov-fail-under=90
-      # The demo runs on the synthetic path, so CI exercises the whole pipeline
-      # without an instrument. It is a smoke test, not a measurement.
+      - run: make ${{ matrix.tier }}
+
+  qa:
+    needs: smoke
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install -e ".[dev]"
+      - name: Lint
+        run: make lint
+      - name: Types (strict)
+        run: make types
+      - name: SAST
+        run: make sast
+      - name: Dependency advisories
+        run: make audit
+      - name: Coverage gate
+        run: make cover
+
+  demo:
+    needs: smoke
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install -e ".[dev]"
+      # The demo runs the whole pipeline on the synthetic path. It is a smoke
+      # test of the artefact, not a measurement, and the report it writes says so.
       - run: make demo
+      - name: The export must refuse a synthetic report
+        run: |
+          if python -m measurement_harness.cli energy-model ./run/report.json; then
+            echo "::error::a synthetic report was exported as measured"
+            exit 1
+          fi
+      - uses: actions/upload-artifact@v4
+        with:
+          name: demo-report
+          path: run/report.json

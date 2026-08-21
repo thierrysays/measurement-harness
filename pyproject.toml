@@ -18,7 +18,14 @@ keywords = ["benchmarking", "power-measurement", "thermal-throttling", "edge-ai"
 dependencies = []
 
 [project.optional-dependencies]
-dev = ["pytest>=7", "pytest-cov>=4", "ruff>=0.6", "mypy>=1.10"]
+dev = [
+    "pytest>=7",
+    "pytest-cov>=4",
+    "ruff>=0.6",
+    "mypy>=1.10",
+    "bandit>=1.7",
+    "pip-audit>=2.7",
+]
 # Instrument backends live behind extras: nobody needs an I2C stack to analyse
 # a report somebody else produced.
 ina219 = ["smbus2>=0.4"]
@@ -32,7 +39,17 @@ where = ["src"]
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 pythonpath = ["src", "."]
-addopts = "-q"
+addopts = "-q --strict-markers"
+# Tiers, so a gate can select one. The names are the contract with the
+# Makefile and with CI; renaming one silently disables a job.
+markers = [
+    "smoke: does it start at all — seconds, no hardware, run first",
+    "unit: one behaviour of one module, at its boundary",
+    "functional: a requirement from docs/FUNCTIONAL_SPEC.md, end to end",
+    "security: input handling, resource use, and what must not leak",
+    "pentest: adversarial — attacks on the claims, not exercises of them",
+    "hardware: requires a real instrument; skipped unless MH_HARDWARE is set",
+]
 
 [tool.ruff]
 line-length = 100
