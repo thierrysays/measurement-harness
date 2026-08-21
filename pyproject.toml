@@ -1,0 +1,47 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "measurement-harness"
+version = "0.1.0"
+description = "Power, latency and thermal behaviour under sustained inference — instrument-agnostic."
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "Apache-2.0" }
+authors = [{ name = "Thierry Sayegh-Sauvage" }]
+keywords = ["benchmarking", "power-measurement", "thermal-throttling", "edge-ai", "instrumentation"]
+
+# No runtime dependencies. A measurement tool is installed on whatever machine
+# is next to the bench, which is frequently an old one with an awkward Python.
+# Every dependency is a reason for it not to install that day.
+dependencies = []
+
+[project.optional-dependencies]
+dev = ["pytest>=7", "pytest-cov>=4", "ruff>=0.6", "mypy>=1.10"]
+# Instrument backends live behind extras: nobody needs an I2C stack to analyse
+# a report somebody else produced.
+ina219 = ["smbus2>=0.4"]
+
+[project.scripts]
+mh = "measurement_harness.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src", "."]
+addopts = "-q"
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B", "SIM"]
+
+[tool.mypy]
+python_version = "3.10"
+strict = true
+files = ["src"]

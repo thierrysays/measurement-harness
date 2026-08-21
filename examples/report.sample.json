@@ -1,0 +1,144 @@
+{
+  "idle": {
+    "duration_s": 10.000000000000007,
+    "joules": 6.034923831125703,
+    "joules_uncertainty": 0.0,
+    "max_gap_s": 0.05000000000000071,
+    "mean_watts": 0.6034923831125699,
+    "min_watts": 0.5757030221545034,
+    "peak_watts": 0.6296298072303446,
+    "sample_count": 202
+  },
+  "instrument": {
+    "accuracy_pct": 0.0,
+    "description": "Deterministic synthetic source. Produces a plausible current shape for pipeline testing; models no real device.",
+    "kind": "synthetic",
+    "provenance": "synthetic",
+    "resolution_a": 0.0,
+    "sample_rate_hz": 0.0,
+    "settings": {
+      "seed": 12
+    }
+  },
+  "joules_per_operation": 0.0877779117624808,
+  "joules_per_operation_above_idle": 0.06997911868824315,
+  "latency": {
+    "count": 12207,
+    "max_s": 0.04159875769136079,
+    "mean_s": 0.02949298710687725,
+    "min_s": 0.019999999999999574,
+    "p50_s": 0.028843979507456652,
+    "p90_s": 0.03866259130290928,
+    "p95_s": 0.040103812379015835,
+    "p99_s": 0.04129537561942698,
+    "stdev_s": 0.006207974677830927
+  },
+  "load": {
+    "duration_s": 360.02089361365057,
+    "joules": 1071.5049688846032,
+    "joules_uncertainty": 0.0,
+    "max_gap_s": 0.04159875769136079,
+    "mean_watts": 2.97622995746038,
+    "min_watts": 0.6177409928475466,
+    "peak_watts": 3.594340077308822,
+    "sample_count": 12209
+  },
+  "operations": 12207,
+  "produced_at": "2026-08-21T14:40:18+00:00",
+  "provenance": {
+    "harness_version": "0.1.0",
+    "kind": "synthetic",
+    "sampler": "inline"
+  },
+  "report_id": "sha256:b8f4b6dabe7c1708800fa3e11dba245de628f600918d568f15e4c2b8f02fe095",
+  "schema": "measurement-harness/report/v1",
+  "session": {
+    "conditions": {},
+    "device": "demo-board",
+    "has_thermometer": false,
+    "idle_s": 10.0,
+    "sample_interval_s": 0.05,
+    "throttle_threshold": 0.05,
+    "window_s": 60.0,
+    "windows": 6
+  },
+  "thermal": {
+    "caveat": "throughput regression is observed, not attributed; thermal throttling is one cause among several unless a temperature series is present",
+    "first_window_ops_s": 45.983333333333334,
+    "onset_s": 60.0,
+    "regression": 0.31511417180137735,
+    "sustained_ops_s": 31.493333333333332,
+    "temperature_rise_c": null,
+    "threshold": 0.05,
+    "throttled": true
+  },
+  "windows": [
+    {
+      "end_s": 60.0,
+      "index": 0,
+      "max_temperature_c": null,
+      "mean_latency_s": 0.02174994599071186,
+      "mean_watts": 2.4932686708402003,
+      "operations": 2759,
+      "start_s": 0.0,
+      "throughput_ops_s": 45.983333333333334
+    },
+    {
+      "end_s": 120.0,
+      "index": 1,
+      "max_temperature_c": null,
+      "mean_latency_s": 0.025356996323551425,
+      "mean_watts": 2.685941041611284,
+      "operations": 2366,
+      "start_s": 60.0,
+      "throughput_ops_s": 39.43333333333333
+    },
+    {
+      "end_s": 180.0,
+      "index": 2,
+      "max_temperature_c": null,
+      "mean_latency_s": 0.028962301643507552,
+      "mean_watts": 2.877807743390788,
+      "operations": 2072,
+      "start_s": 120.0,
+      "throughput_ops_s": 34.53333333333333
+    },
+    {
+      "end_s": 240.0,
+      "index": 3,
+      "max_temperature_c": null,
+      "mean_latency_s": 0.03256724655677745,
+      "mean_watts": 3.0699837069239497,
+      "operations": 1843,
+      "start_s": 180.0,
+      "throughput_ops_s": 30.716666666666665
+    },
+    {
+      "end_s": 300.0,
+      "index": 4,
+      "max_temperature_c": null,
+      "mean_latency_s": 0.03617024417418541,
+      "mean_watts": 3.2628791084344058,
+      "operations": 1658,
+      "start_s": 240.0,
+      "throughput_ops_s": 27.633333333333333
+    },
+    {
+      "end_s": 360.0,
+      "index": 5,
+      "max_temperature_c": null,
+      "mean_latency_s": 0.039772398988380364,
+      "mean_watts": 3.4551840769913627,
+      "operations": 1509,
+      "start_s": 300.0,
+      "throughput_ops_s": 25.15
+    }
+  ],
+  "workload": {
+    "input_shape": "n/a",
+    "kind": "synthetic",
+    "model": "synthetic/none",
+    "nominal_latency_s": 0.02,
+    "thermal_slowdown_pct_per_min": 18.0
+  }
+}
