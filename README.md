@@ -175,10 +175,10 @@ cannot be moved between tiers and keep an old label.
 
 ```
 make smoke        # does it start at all                     5 tests
-make unit         # each part at its boundary               61 tests
+make unit         # each part at its boundary               54 tests
 make functional   # the specification, end to end           22 tests
 make security     # input it did not produce                14 tests
-make pentest      # attacks on the claim                    19 tests
+make pentest      # attacks on the claim                    16 tests
 make test         # all of it                              111 tests
 make qa           # ruff, mypy --strict, bandit, pip-audit, coverage >= 90%
 ```
