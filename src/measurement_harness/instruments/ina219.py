@@ -1,4 +1,4 @@
-"""INA219 high-side shunt monitor — declared, not yet run against the part.
+"""INA219 high-side shunt monitor, declared, not yet run against the part.
 
 The INA219 is the obvious first instrument for a Qwiic-equipped bench: a 0.1 Ω
 shunt, an I2C address, 12-bit conversion, and a bus-voltage channel that catches

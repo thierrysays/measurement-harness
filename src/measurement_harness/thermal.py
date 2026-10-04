@@ -3,8 +3,8 @@
 Sustained inference on a passively-cooled board does not fail; it slows down.
 The SoC reaches its thermal limit, the governor pulls the clock back, throughput
 falls, and every published figure taken in the first thirty seconds becomes
-wrong for the deployment. That gap — burst performance against steady-state
-performance — is the single most useful number this harness produces, and it is
+wrong for the deployment. That gap (burst performance against steady-state
+performance) is the single most useful number this harness produces, and it is
 the one almost never quoted.
 
 The detector is deliberately crude and deliberately explicit. Split the run into
@@ -13,7 +13,7 @@ against the first. A regression beyond the threshold, *persisting* rather than
 appearing once, is a throttle. One slow window is a neighbour's microwave.
 
 What this cannot do: distinguish thermal throttling from any other cause of
-sustained slowdown — memory pressure, a background update, a power supply that
+sustained slowdown, memory pressure, a background update, a power supply that
 sags as it warms. The verdict says *throughput regressed*, and names temperature
 as evidence only when the device under test supplied a temperature series.
 """

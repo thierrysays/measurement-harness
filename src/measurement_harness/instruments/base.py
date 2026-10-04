@@ -8,7 +8,7 @@ DC brick, and a synthetic generator all satisfy it identically.
 
 The identity block is not decoration. A power figure without the instrument that
 produced it, its rated accuracy and its shunt configuration is a number, not a
-measurement — nobody downstream can say how much of the difference between two
+measurement, nobody downstream can say how much of the difference between two
 runs is the device and how much is the meter.
 """
 
@@ -92,7 +92,7 @@ class UnportedInstrument:
 
     The pattern matters more than the class: a driver written from a datasheet
     but never run against the part is a hypothesis. It belongs in the tree, named
-    and documented, raising :class:`~..errors.NotPortedError` — not returning
+    and documented, raising :class:`~..errors.NotPortedError`, not returning
     plausible numbers that will be believed.
     """
 

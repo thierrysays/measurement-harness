@@ -6,7 +6,7 @@ Two rules run through this module.
 the interval between samples is whatever the instrument actually managed, not
 what it was asked for. Multiplying a mean wattage by a wall-clock duration is
 the standard way to be quietly wrong by several percent whenever the sampler
-stutters — which it does, under exactly the sustained load the run is meant to
+stutters, which it does, under exactly the sustained load the run is meant to
 characterise.
 
 **Carry the uncertainty.** Every figure leaves this module with an error bar
@@ -160,7 +160,7 @@ def energy_above_idle(active: EnergyResult, idle_watts: float) -> tuple[float, f
 
     A board that draws 2 W doing nothing and 2.4 W under load spends most of its
     energy being switched on. For a per-action figure, the idle floor belongs to
-    the duty cycle, not to the action — subtracting it is what makes two boards
+    the duty cycle, not to the action, subtracting it is what makes two boards
     with different idle draw comparable on the work they do.
     """
     marginal = max(0.0, active.joules - idle_watts * active.duration_s)

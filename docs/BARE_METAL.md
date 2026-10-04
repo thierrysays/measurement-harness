@@ -29,7 +29,7 @@ Three things to check before trusting a single number:
 1. **Common ground.** Host, instrument and device under test share one ground.
    Two grounds at different potentials produce readings that drift with load.
 2. **Shunt rating.** 0.1 Ω at ±320 mV full scale reaches 3.2 A. Check the
-   inrush of your device, not its steady draw — a board that settles at 400 mA
+   inrush of your device, not its steady draw, a board that settles at 400 mA
    can pull two amps for a few milliseconds at power-on.
 3. **Wire gauge on the supply side.** A thin lead is itself a shunt. If the rail
    sags more than a few tens of millivolts under load, the `volts` column will
@@ -129,7 +129,7 @@ mh energy-model ./run/report.json --action inference
 
 The export refuses if anything about the run was synthetic. On a real
 instrument it will not be, and the `source` string it prints is what travels
-downstream — carry it verbatim, digest included.
+downstream, carry it verbatim, digest included.
 
 ## 8. Calibrate before you publish
 

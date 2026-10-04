@@ -21,7 +21,7 @@ here rather than discovered later.
 ## 2. Sustained load, in windows
 
 `windows × window_s` seconds of continuous invocation, sliced into equal
-windows. Defaults are six windows of sixty seconds — six minutes, which is long
+windows. Defaults are six windows of sixty seconds, six minutes, which is long
 enough for a passively-cooled SoC to reach a steady state and short enough that
 nobody skips the step.
 
@@ -32,8 +32,8 @@ throttle detector works on.
 ## 3. Integration, not averaging
 
 Energy is the trapezoidal integral of instantaneous power over the timestamps
-the sampler actually achieved. The alternative — mean watts multiplied by
-wall-clock duration — is correct only when sampling is uniform, and sampling is
+the sampler actually achieved. The alternative (mean watts multiplied by
+wall-clock duration) is correct only when sampling is uniform, and sampling is
 least uniform under exactly the sustained load being characterised.
 
 `max_gap_s` is reported for this reason. A gap far above the nominal sample
@@ -64,7 +64,7 @@ Two contributions, added:
 
 - **Proportional**: the instrument's rated accuracy as a percentage of reading.
 - **Absolute**: the smallest current step the instrument can resolve, times mean
-  bus voltage, times duration — the energy that is invisible to it regardless of
+  bus voltage, times duration, the energy that is invisible to it regardless of
   how long you measure.
 
 An instrument that declares neither gets an error bar of zero, which is honest:

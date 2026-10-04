@@ -1,4 +1,4 @@
-# ADR 0001 — The core never learns what it is talking to
+# ADR 0001, The core never learns what it is talking to
 
 **Status:** accepted · 2026-08-21
 
@@ -11,7 +11,7 @@ produced the samples.
 
 ## Decision
 
-The core depends on `Instrument` — `identity` / `open` / `read` / `close` — and
+The core depends on `Instrument` (`identity` / `open` / `read` / `close`) and
 on nothing else. Shunt monitors, bench supplies over SCPI, USB-C inline
 analysers, smart plugs and synthetic generators are all the same shape. Backends
 live behind optional extras so that analysing somebody else's report never

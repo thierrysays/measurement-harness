@@ -36,7 +36,7 @@ class SessionSpec:
     """Everything that decides what a run means, in one diffable object."""
 
     #: Free-form identifier of the device under test. The harness never
-    #: validates it — it is device-agnostic, and a hard-coded board list is the
+    #: validates it, it is device-agnostic, and a hard-coded board list is the
     #: first step towards not being.
     device: str
     #: Seconds of idle sampling before the load starts.

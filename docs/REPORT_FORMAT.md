@@ -23,7 +23,7 @@ is provided is the shape a signature would cover.
 | `provenance.sampler` | `inline` or `threaded`. Peak figures are not comparable across the two. |
 | `provenance.harness_version` | Version of the harness that produced the run. |
 | `session` | The spec: device string, idle seconds, window count and length, sample interval, throttle threshold, whether a thermometer was present, free-form conditions. |
-| `instrument` | Kind, description, provenance, rated accuracy, resolution, sample rate, and driver settings — shunt value, address, gain. |
+| `instrument` | Kind, description, provenance, rated accuracy, resolution, sample rate, and driver settings, shunt value, address, gain. |
 | `workload` | Whatever the workload's `describe()` returned. Opaque to the harness. |
 | `idle` | Energy result over the idle baseline. |
 | `load` | Energy result over the whole sustained run. |
@@ -34,7 +34,7 @@ is provided is the shape a signature would cover.
 | `joules_per_operation` | Total energy divided by operations. Includes the idle floor. |
 | `joules_per_operation_above_idle` | The figure to quote. Idle floor removed. |
 
-An energy result — `idle` and `load` — carries `joules`, `joules_uncertainty`,
+An energy result (`idle` and `load`) carries `joules`, `joules_uncertainty`,
 `mean_watts`, `peak_watts`, `min_watts`, `duration_s`, `sample_count` and
 `max_gap_s`.
 
@@ -57,7 +57,7 @@ energy table.
 `values` are joules. `basis` is `above_idle` (default) or `total`. `source` is a
 sentence intended to be carried verbatim by the consumer: it names the
 instrument, the device, the operation count, the basis, the originating report,
-and — where relevant — that throughput regressed under sustained load, or that
+and (where relevant) that throughput regressed under sustained load, or that
 an action's figure was scaled from a measurement rather than measured.
 
 A consumer that keeps `values` and discards `source` has kept the number and

@@ -6,8 +6,8 @@ order of magnitude, and nothing in the system distinguishes the two cases.
 
 This module is the bridge from a run to such a table, and it has one rule: a
 figure derived from a synthetic run is not allowed to leave here wearing the
-label of a measurement. The caller may have one anyway — rehearsing a pipeline
-is legitimate — but only by asking in as many words, and the exported ``source``
+label of a measurement. The caller may have one anyway (rehearsing a pipeline
+is legitimate) but only by asking in as many words, and the exported ``source``
 string then says ``synthetic`` for as long as the figure lives.
 
 The default basis is energy **above idle**. A per-action figure that includes the
@@ -58,7 +58,7 @@ def export_energy_model(
     """Derive a per-action energy table from one run.
 
     ``actions`` maps an action name to a multiplier of the measured per-operation
-    figure — ``{"inference": 1.0, "inference_batch4": 4.0}``. Multipliers are the
+    figure, ``{"inference": 1.0, "inference_batch4": 4.0}``. Multipliers are the
     caller's assertion about their own system, and the export says so: only the
     ``1.0`` entries are measured, the rest are scaled from a measurement.
     """

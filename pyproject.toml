@@ -5,7 +5,7 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "measurement-harness"
 version = "0.1.0"
-description = "Power, latency and thermal behaviour under sustained inference — instrument-agnostic."
+description = "Power, latency and thermal behaviour under sustained inference, instrument-agnostic."
 readme = "README.md"
 requires-python = ">=3.10"
 license = { text = "Apache-2.0" }
@@ -43,11 +43,11 @@ addopts = "-q --strict-markers"
 # Tiers, so a gate can select one. The names are the contract with the
 # Makefile and with CI; renaming one silently disables a job.
 markers = [
-    "smoke: does it start at all — seconds, no hardware, run first",
+    "smoke: does it start at all, seconds, no hardware, run first",
     "unit: one behaviour of one module, at its boundary",
     "functional: a requirement from docs/FUNCTIONAL_SPEC.md, end to end",
     "security: input handling, resource use, and what must not leak",
-    "pentest: adversarial — attacks on the claims, not exercises of them",
+    "pentest: adversarial, attacks on the claims, not exercises of them",
     "hardware: requires a real instrument; skipped unless MH_HARDWARE is set",
 ]
 

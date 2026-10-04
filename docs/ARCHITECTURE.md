@@ -15,7 +15,7 @@ Deployments are not cold. Under continuous inference a passively-cooled SoC
 reaches its thermal limit within minutes, the governor pulls the clock back, and
 steady-state throughput settles somewhere below the number that was published.
 The gap between burst and steady state is the operationally interesting figure,
-and it is the one almost nobody measures — because measuring it takes six
+and it is the one almost nobody measures, because measuring it takes six
 minutes per configuration instead of six seconds, and because the result is
 worse.
 
@@ -42,7 +42,7 @@ identity block.
 Two reasons. The first is portability: a shunt monitor over I²C, a bench supply
 over SCPI, a USB-C inline analyser and a smart plug on the mains side of a DC
 brick all satisfy the same contract, and the analysis path should not fork per
-meter. The second is honesty about where trust lives — the harness cannot audit
+meter. The second is honesty about where trust lives, the harness cannot audit
 its instrument, so the best it can do is record precisely which one produced the
 figures, with what rated accuracy and what wiring, and let a reader judge.
 
@@ -55,7 +55,7 @@ difference the meter cannot resolve.
 The one property the harness actually enforces is that a figure that was not
 measured never leaves labelled as one.
 
-It would have been easy to make this a convention — a flag in a config file, a
+It would have been easy to make this a convention, a flag in a config file, a
 note in a README. Conventions decay across system boundaries, and the boundary
 is exactly where the damage happens: an estimate copied into a downstream table,
 carried through two systems, and quoted back as a measurement, with nothing in

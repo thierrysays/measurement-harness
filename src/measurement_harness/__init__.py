@@ -1,4 +1,4 @@
-"""measurement-harness — power, latency and thermal behaviour under sustained load.
+"""measurement-harness, power, latency and thermal behaviour under sustained load.
 
 This package measures a device under test. It does not govern one, does not
 decide whether a workload should run, and holds no opinion about what the
@@ -9,7 +9,7 @@ verdicts share a failure mode.
 Two properties are load-bearing:
 
 * **Instrument-agnostic.** The core knows only :class:`~.instruments.base.Instrument`
-  — something that can be opened, sampled for volts and amps, and closed. A
+ , something that can be opened, sampled for volts and amps, and closed. A
   shunt monitor over I2C, a bench supply over SCPI, a USB-C power analyser and a
   synthetic generator are all the same shape.
 * **Provenance is carried, never inferred.** Every report states which

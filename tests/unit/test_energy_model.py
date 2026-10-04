@@ -1,4 +1,4 @@
-"""Exporting a figure downstream — and refusing to launder a rehearsal as one."""
+"""Exporting a figure downstream, and refusing to launder a rehearsal as one."""
 
 import pytest
 

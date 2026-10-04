@@ -17,26 +17,26 @@ to [What the demonstration shows](#what-the-demonstration-shows).
 
 ## Table of contents
 
-- [Part 0 — What you are about to run, and why](#part-0--what-you-are-about-to-run-and-why)
-- [Part 1 — Open a terminal](#part-1--open-a-terminal)
-- [Part 2 — Install Python](#part-2--install-python)
-- [Part 3 — Get the code](#part-3--get-the-code)
-- [Part 4 — Make a virtual environment](#part-4--make-a-virtual-environment)
-- [Part 5 — Install the project](#part-5--install-the-project)
-- [Part 6 — Run the tests](#part-6--run-the-tests)
-- [Part 7 — Run the demonstration](#part-7--run-the-demonstration)
+- [Part 0: What you are about to run, and why](#part-0--what-you-are-about-to-run-and-why)
+- [Part 1: Open a terminal](#part-1--open-a-terminal)
+- [Part 2: Install Python](#part-2--install-python)
+- [Part 3: Get the code](#part-3--get-the-code)
+- [Part 4: Make a virtual environment](#part-4--make-a-virtual-environment)
+- [Part 5: Install the project](#part-5--install-the-project)
+- [Part 6: Run the tests](#part-6--run-the-tests)
+- [Part 7: Run the demonstration](#part-7--run-the-demonstration)
 - [What the demonstration shows](#what-the-demonstration-shows)
-- [Part 8 — Check the report yourself](#part-8--check-the-report-yourself)
-- [Part 9 — Try to cheat](#part-9--try-to-cheat)
-- [Part 10 — Look inside the report](#part-10--look-inside-the-report)
-- [Part 11 — Measure your own workload](#part-11--measure-your-own-workload)
+- [Part 8: Check the report yourself](#part-8--check-the-report-yourself)
+- [Part 9: Try to cheat](#part-9--try-to-cheat)
+- [Part 10: Look inside the report](#part-10--look-inside-the-report)
+- [Part 11: Measure your own workload](#part-11--measure-your-own-workload)
 - [Troubleshooting](#troubleshooting)
 
 ---
 
-## Part 0 — What you are about to run, and why
+## Part 0, What you are about to run, and why
 
-Imagine a small computer running an AI model continuously — inspecting parts on
+Imagine a small computer running an AI model continuously, inspecting parts on
 a conveyor, say. Two questions decide whether it can be deployed: how much power
 does it draw, and does it keep up.
 
@@ -47,13 +47,13 @@ the machine is cold throughout.
 Run that same machine for six minutes and something else happens. The chip warms
 up, hits its temperature limit, and slows itself down to avoid damage. This is
 called **thermal throttling**, and it is completely normal. The throughput after
-throttling is often twenty or thirty percent below the published figure — and it
+throttling is often twenty or thirty percent below the published figure, and it
 is the only figure the deployment ever experiences.
 
 This project measures the second one.
 
 You will run a simulated six-minute test. Nothing real is measured, and the
-report says so in a field you cannot miss — which is the other thing this project
+report says so in a field you cannot miss, which is the other thing this project
 is about, and the part you will test yourself in Part 9.
 
 **Time:** about twenty minutes, most of it downloads.
@@ -62,15 +62,15 @@ is about, and the part you will test yourself in Part 9.
 
 ---
 
-## Part 1 — Open a terminal
+## Part 1, Open a terminal
 
 A terminal is a window where you type commands instead of clicking.
 
-**Windows** — press the Windows key, type `powershell`, press Enter.
+**Windows**: press the Windows key, type `powershell`, press Enter.
 
-**macOS** — press ⌘ + Space, type `terminal`, press Enter.
+**macOS**: press ⌘ + Space, type `terminal`, press Enter.
 
-**Linux** — press Ctrl + Alt + T, or find "Terminal" in your applications.
+**Linux**: press Ctrl + Alt + T, or find "Terminal" in your applications.
 
 You will see a prompt: some text ending in `>` or `$` or `%`. Commands go after
 it. Type them exactly, then press Enter. Nothing happens until you press Enter.
@@ -85,7 +85,7 @@ Do not type the backticks.
 
 ---
 
-## Part 2 — Install Python
+## Part 2, Install Python
 
 Python is the language this project is written in. Check whether you have it:
 
@@ -97,13 +97,13 @@ If you see `Python 3.10` or higher, skip to Part 3.
 
 **If you see an error, or a version below 3.10:**
 
-- **Windows** — download from [python.org/downloads](https://www.python.org/downloads/).
+- **Windows**: download from [python.org/downloads](https://www.python.org/downloads/).
   During installation, tick **"Add Python to PATH"**. This matters; if you miss
   it, the terminal will not find Python afterwards. Then close and reopen
   PowerShell.
-- **macOS** — download from the same place, or if you have Homebrew:
+- **macOS**: download from the same place, or if you have Homebrew:
   `brew install python@3.12`.
-- **Linux (Debian/Ubuntu)** — `sudo apt update && sudo apt install -y python3 python3-venv python3-pip`.
+- **Linux (Debian/Ubuntu)**: `sudo apt update && sudo apt install -y python3 python3-venv python3-pip`.
   The `python3-venv` part is easy to forget and Part 4 will fail without it.
 
 On Windows, the command is often `python` rather than `python3`. If `python3`
@@ -111,7 +111,7 @@ says "not recognised", try `python` everywhere below.
 
 ---
 
-## Part 3 — Get the code
+## Part 3, Get the code
 
 You need git. Check:
 
@@ -129,7 +129,7 @@ git clone https://github.com/thierrysays/measurement-harness.git
 cd measurement-harness
 ```
 
-`cd` means "change directory" — you are now working inside the folder that was
+`cd` means "change directory", you are now working inside the folder that was
 just created. Everything from here happens in that folder.
 
 Check you are in the right place:
@@ -143,7 +143,7 @@ PowerShell, `ls` works too.
 
 ---
 
-## Part 4 — Make a virtual environment
+## Part 4, Make a virtual environment
 
 A virtual environment is a private copy of Python for this project. It means
 nothing you install here can break anything else on your machine, and deleting
@@ -176,13 +176,13 @@ later says "command not found", this is almost always why.
 
 ---
 
-## Part 5 — Install the project
+## Part 5, Install the project
 
 ```bash
 pip install -e ".[dev]"
 ```
 
-This takes a minute or two. The `-e` means "editable" — if you change the code,
+This takes a minute or two. The `-e` means "editable", if you change the code,
 the change takes effect immediately. The `[dev]` part adds the testing tools.
 
 Check it worked:
@@ -197,7 +197,7 @@ You should see `measurement-harness 0.1.0`.
 
 ---
 
-## Part 6 — Run the tests
+## Part 6, Run the tests
 
 Before running anything, prove the code does what it claims:
 
@@ -223,7 +223,7 @@ used before, to find out whether anything works at all.
 
 ---
 
-## Part 7 — Run the demonstration
+## Part 7, Run the demonstration
 
 ```bash
 make demo
@@ -251,26 +251,26 @@ writes a report to `run/report.json` and prints a summary:
 
 Read that output line by line. Each one is there for a reason.
 
-**`instrument : synthetic (synthetic)`** — the word in brackets is the
+**`instrument : synthetic (synthetic)`**: the word in brackets is the
 provenance. It says nothing here was measured. It is derived from the instrument
 itself, not typed by whoever ran the test, and you cannot change it without
 breaking the report.
 
-**`idle : 0.603 W`** — what the device draws doing nothing. It is measured
+**`idle : 0.603 W`**: what the device draws doing nothing. It is measured
 separately and subtracted, because otherwise a board that idles high looks
 expensive at everything.
 
-**`energy/op : 69.979 mJ above idle`** — the cost of one unit of work, with the
+**`energy/op : 69.979 mJ above idle`**: the cost of one unit of work, with the
 idle floor removed. The `±` is the error bar. Here it is zero because the
 synthetic instrument honestly declares no accuracy; a real meter declares its
 own, and the figure carries it.
 
-**`latency : p50 28.8 ms, p95 40.1 ms`** — half the operations finished within
+**`latency : p50 28.8 ms, p95 40.1 ms`**: half the operations finished within
 28.8 ms; ninety-five percent within 40.1 ms. The average is deliberately not
 shown first: an average hides the slow tail, and the slow tail is what people
 notice.
 
-**`sustained : THROTTLED from t=60s, 46.0 -> 31.5 ops/s`** — this is the whole
+**`sustained : THROTTLED from t=60s, 46.0 -> 31.5 ops/s`**: this is the whole
 point. The device started at 46 operations per second and settled at 31.5. Any
 figure taken in the first minute would have been wrong by a third.
 
@@ -278,11 +278,11 @@ Note what it does *not* say. It says throughput regressed, not "the device
 overheated". Slowdown has several possible causes, and this run had no
 thermometer, so the report declines to name one.
 
-**`report_id : sha256:...`** — a fingerprint of everything above.
+**`report_id : sha256:...`**: a fingerprint of everything above.
 
 ---
 
-## Part 8 — Check the report yourself
+## Part 8, Check the report yourself
 
 The command that produces a report and the command that checks one are separate
 on purpose. A tool that verifies its own output has verified nothing an auditor
@@ -302,9 +302,9 @@ can run it, on any machine, against a report someone sent them.
 
 ---
 
-## Part 9 — Try to cheat
+## Part 9, Try to cheat
 
-This is the interesting part. Open `run/report.json` in any text editor — Notepad
+This is the interesting part. Open `run/report.json` in any text editor, Notepad
 is fine.
 
 Find the line that says `"kind": "synthetic"` and change it to `"measured"`. Save
@@ -319,7 +319,7 @@ report-invalid: digest mismatch: file claims sha256:b8f4b6da…, body hashes to 
 ```
 
 Try something subtler. Undo that change, and instead find
-`"joules_per_operation_above_idle"` and halve the number — make the device look
+`"joules_per_operation_above_idle"` and halve the number, make the device look
 twice as efficient. Verify again. Same result.
 
 Now try the thing the project actually refuses:
@@ -340,12 +340,12 @@ number from a run where nothing was measured. You can insist:
 mh energy-model run/report.json --allow-synthetic
 ```
 
-and it complies — but look at the `source` field in the output. It says
+and it complies, but look at the `source` field in the output. It says
 `synthetic — not measured`, and that sentence travels with the number wherever it
 goes.
 
 > **One honest caveat.** If you edit the report *and* recompute the fingerprint,
-> the file verifies. The fingerprint detects editing, not authorship — nothing
+> the file verifies. The fingerprint detects editing, not authorship, nothing
 > here signs reports, because choosing how to manage signing keys belongs to
 > whoever runs the bench. This is written down as residual risk R-2 in
 > [THREAT_MODEL.md](THREAT_MODEL.md), and there is a test that demonstrates it
@@ -359,23 +359,23 @@ make demo
 
 ---
 
-## Part 10 — Look inside the report
+## Part 10, Look inside the report
 
 ```bash
 mh show run/report.json
 ```
 
-Or open `run/report.json` in a text editor. It is plain JSON — text with braces.
+Or open `run/report.json` in a text editor. It is plain JSON, text with braces.
 
 Things worth finding:
 
-- **`windows`** — one entry per minute of the run. Compare the first
+- **`windows`**: one entry per minute of the run. Compare the first
   `throughput_ops_s` with the last; that difference is the throttling.
-- **`instrument`** — what took the readings, its rated accuracy, its settings.
-- **`load.max_gap_s`** — the longest gap between two readings. If it is far above
+- **`instrument`**: what took the readings, its rated accuracy, its settings.
+- **`load.max_gap_s`**: the longest gap between two readings. If it is far above
   the sampling interval, the machine was too busy to sample properly and the
   energy figure is interpolating across a period nobody observed.
-- **`thermal.caveat`** — the sentence saying that regression is observed, not
+- **`thermal.caveat`**: the sentence saying that regression is observed, not
   attributed.
 
 What you will *not* find: the raw readings. A six-hour run would produce a file
@@ -384,7 +384,7 @@ series.
 
 ---
 
-## Part 11 — Measure your own workload
+## Part 11, Measure your own workload
 
 The harness does not know or care what the work is. Give it something with three
 methods:
@@ -407,7 +407,7 @@ print(result.joules_per_operation_above_idle, result.throttle.throttled)
 ```
 
 Run it with `python my_workload.py`. With a synthetic instrument the energy
-figures are fiction — but the **latency and throughput figures are real**,
+figures are fiction, but the **latency and throughput figures are real**,
 because those are timed by the harness's own clock around your `invoke()`.
 
 That alone will tell you whether your workload slows down under sustained load,
@@ -426,7 +426,7 @@ prompt should start with `(.venv)`.
 
 **`command not found: python3`**
 On Windows, try `python`. Otherwise Python is not installed or was installed
-without "Add to PATH" — reinstall and tick the box.
+without "Add to PATH", reinstall and tick the box.
 
 **`No module named venv`**
 On Debian/Ubuntu: `sudo apt install python3-venv`.

@@ -1,8 +1,8 @@
 """The only place a report is serialised for hashing.
 
 A digest is worth exactly as much as the determinism of the bytes beneath it.
-Sorted keys, no insignificant whitespace, and non-finite floats rejected outright
-— a report containing ``NaN`` is a report whose digest depends on which JSON
+Sorted keys, no insignificant whitespace, and non-finite floats rejected outright,
+a report containing ``NaN`` is a report whose digest depends on which JSON
 encoder the reader happens to use.
 """
 

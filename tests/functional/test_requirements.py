@@ -4,7 +4,7 @@ These are written from the specification, not from the code. Each one is named
 for the requirement it discharges, so a reader who will never open
 `src/` can tell whether a claim made about this harness is true. Where a
 requirement is about an artefact leaving the machine, the test runs the CLI as a
-real subprocess — a tool that only works when imported by its own test suite is
+real subprocess, a tool that only works when imported by its own test suite is
 a tool nobody can run.
 """
 
@@ -38,7 +38,7 @@ def _run(tmp_path, cli_env, *args: str) -> subprocess.CompletedProcess[str]:
 
 # ------------------------------------------------------------------ FR-1
 def test_fr1_a_run_records_the_conditions_it_was_taken_under(tmp_path, cli_env):
-    """FR-1 — a report states its instrument, its session and its provenance."""
+    """FR-1, a report states its instrument, its session and its provenance."""
     out = tmp_path / "r.json"
     assert _run(tmp_path, cli_env, "run", "--device", "board-x", "--windows", "3",
                 "--window-s", "5", "--idle-s", "2", "--ambient", "21.5",
@@ -54,7 +54,7 @@ def test_fr1_a_run_records_the_conditions_it_was_taken_under(tmp_path, cli_env):
 
 # ------------------------------------------------------------------ FR-2
 def test_fr2_the_quoted_figure_excludes_the_idle_floor(tmp_path, cli_env):
-    """FR-2 — energy per operation is quoted above idle, and idle is measured."""
+    """FR-2, energy per operation is quoted above idle, and idle is measured."""
     out = tmp_path / "r.json"
     _run(tmp_path, cli_env, "run", "--device", "b", "--windows", "3",
          "--window-s", "5", "--idle-s", "3", "--out", str(out))
@@ -66,7 +66,7 @@ def test_fr2_the_quoted_figure_excludes_the_idle_floor(tmp_path, cli_env):
 
 # ------------------------------------------------------------------ FR-3
 def test_fr3_a_sustained_run_is_windowed_and_assessed(tmp_path, cli_env):
-    """FR-3 — the load phase is sliced into windows and a verdict is reached."""
+    """FR-3, the load phase is sliced into windows and a verdict is reached."""
     out = tmp_path / "r.json"
     _run(tmp_path, cli_env, "run", "--device", "b", "--windows", "5",
          "--window-s", "30", "--idle-s", "2", "--slowdown", "25", "--out", str(out))
@@ -86,7 +86,7 @@ def test_fr3_a_run_that_holds_its_throughput_is_not_flagged(tmp_path, cli_env):
 
 # ------------------------------------------------------------------ FR-4
 def test_fr4_a_report_can_be_verified_by_someone_who_did_not_produce_it(tmp_path, cli_env):
-    """FR-4 — verification is a separate command, sharing no state with the run."""
+    """FR-4, verification is a separate command, sharing no state with the run."""
     out = tmp_path / "r.json"
     _run(tmp_path, cli_env, "run", "--device", "b", "--windows", "2",
          "--window-s", "5", "--idle-s", "1", "--out", str(out))
@@ -109,7 +109,7 @@ def test_fr4_verification_fails_loudly_on_an_altered_report(tmp_path, cli_env):
 
 # ------------------------------------------------------------------ FR-5
 def test_fr5_a_synthetic_run_cannot_be_exported_as_a_measurement(tmp_path, cli_env):
-    """FR-5 — the export refuses a rehearsal unless asked in as many words."""
+    """FR-5, the export refuses a rehearsal unless asked in as many words."""
     out = tmp_path / "r.json"
     _run(tmp_path, cli_env, "run", "--device", "b", "--windows", "2",
          "--window-s", "5", "--idle-s", "1", "--out", str(out))
@@ -124,7 +124,7 @@ def test_fr5_a_synthetic_run_cannot_be_exported_as_a_measurement(tmp_path, cli_e
 
 # ------------------------------------------------------------------ FR-6
 def test_fr6_an_instrument_that_has_never_run_refuses_to_produce_readings(tmp_path, cli_env):
-    """FR-6 — an unported driver raises rather than returning plausible numbers."""
+    """FR-6, an unported driver raises rather than returning plausible numbers."""
     with pytest.raises(NotPortedError):
         INA219Instrument().open()
     result = _run(tmp_path, cli_env, "run", "--device", "b", "--instrument", "ina219",
@@ -137,7 +137,7 @@ def test_fr6_an_instrument_that_has_never_run_refuses_to_produce_readings(tmp_pa
 
 # ------------------------------------------------------------------ FR-7
 def test_fr7_the_same_inputs_produce_the_same_figures():
-    """FR-7 — a run is reproducible from its seed, or the format is untestable."""
+    """FR-7, a run is reproducible from its seed, or the format is untestable."""
     def once() -> tuple[float, int, float]:
         clock = ManualClock()
         instrument = SyntheticInstrument(SyntheticProfile(), seed=11, clock=clock)
@@ -160,14 +160,14 @@ def test_fr7_two_identical_runs_digest_identically():
 
 # ------------------------------------------------------------------ FR-8
 def test_fr8_a_report_carries_an_error_bar_or_says_it_has_none(tmp_path, cli_env):
-    """FR-8 — every energy figure leaves with an uncertainty attached."""
+    """FR-8, every energy figure leaves with an uncertainty attached."""
     out = tmp_path / "r.json"
     _run(tmp_path, cli_env, "run", "--device", "b", "--windows", "2",
          "--window-s", "5", "--idle-s", "1", "--out", str(out))
     body = json.loads(out.read_text())
     assert "joules_uncertainty" in body["load"]
     assert "joules_uncertainty" in body["idle"]
-    # The synthetic instrument declares no accuracy, so the bar is zero — and
+    # The synthetic instrument declares no accuracy, so the bar is zero, and
     # the instrument block is present so a reader can see why.
     assert body["load"]["joules_uncertainty"] == 0.0
     assert body["instrument"]["accuracy_pct"] == 0.0
@@ -175,7 +175,7 @@ def test_fr8_a_report_carries_an_error_bar_or_says_it_has_none(tmp_path, cli_env
 
 # ------------------------------------------------------------------ FR-9
 def test_fr9_the_export_carries_the_sentence_not_just_the_number(measured_report):
-    """FR-9 — a consumer that keeps the value can also keep its qualification."""
+    """FR-9, a consumer that keeps the value can also keep its qualification."""
     export = export_energy_model(measured_report, actions={"inference": 1.0})
     payload = export.as_dict()
     assert payload["values"]["inference"] > 0
@@ -193,7 +193,7 @@ def test_fr9_a_scaled_action_is_never_described_as_measured(measured_report):
 
 # ------------------------------------------------------------------ FR-10
 def test_fr10_a_report_round_trips_through_a_file_unchanged(tmp_path, measured_report):
-    """FR-10 — writing and reading a report does not change what it says."""
+    """FR-10, writing and reading a report does not change what it says."""
     path = measured_report.write(tmp_path / "r.json")
     reloaded = Report.read(path)
     reloaded.verify()

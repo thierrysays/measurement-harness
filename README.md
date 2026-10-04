@@ -1,13 +1,13 @@
 # measurement-harness
 
-**Power, latency and thermal behaviour under sustained load — on whatever you point it at.**
+**Power, latency and thermal behaviour under sustained load, on whatever you point it at.**
 
 Most published edge-AI figures are burst figures. A model is loaded, an
 inference is timed, a wattage is quoted, and everything is measured in the first
 thirty seconds, while the board is still cold. Deployments are not cold. A
 passively-cooled SoC under continuous inference reaches its thermal limit,
-the governor pulls the clock back, and the throughput that matters — the one
-in minute four — is a number nobody published.
+the governor pulls the clock back, and the throughput that matters (the one
+in minute four) is a number nobody published.
 
 This harness measures that number. It is instrument-agnostic and
 device-agnostic: it knows how to open something that reports volts and amps,
@@ -33,7 +33,7 @@ mh verify ./run/report.json
   report_id    : sha256:b8f4b6da…
 ```
 
-That run is synthetic — no instrument was attached — and the report says so in
+That run is synthetic (no instrument was attached) and the report says so in
 a field, not a footnote. Which brings us to the only rule this project actually
 enforces.
 
@@ -46,7 +46,7 @@ enforces.
 Every report carries `provenance.kind`, which is `measured` only when a real
 instrument was on a real rail. Everything else is `synthetic`, and
 `mh energy-model` refuses to export a downstream figure from such a report
-unless you ask for it explicitly — at which point the exported `source` string
+unless you ask for it explicitly, at which point the exported `source` string
 says `synthetic — not measured` for as long as that figure lives.
 
 This is not ceremony. Estimated energy figures are load-bearing in more systems
@@ -93,7 +93,7 @@ session.py            idle baseline, windows, two sampling strategies
 metrics.py            integration and percentiles, with the error bars
 thermal.py            the throttle detector and its anti-noise rule
 report.py             the artefact and its digest
-energy_model.py       export downstream — and refuse to launder a rehearsal
+energy_model.py       export downstream, and refuse to launder a rehearsal
 ```
 
 Two sampling strategies, because they are not interchangeable. `InlineSampler`
@@ -118,7 +118,7 @@ class MyMeter:
 
 The identity block is where the rated accuracy, the resolution, the sample rate
 and the wiring go. A driver written from a datasheet but never run against the
-part should subclass `UnportedInstrument` and raise, as `ina219.py` does — a
+part should subclass `UnportedInstrument` and raise, as `ina219.py` does, a
 hypothesis in the tree is useful, a hypothesis returning plausible numbers is
 not.
 
@@ -153,16 +153,16 @@ part that says how much to believe it.
 
 | For | Read |
 |---|---|
-| Never used a terminal, want to see it work | [GETTING_STARTED.md](docs/GETTING_STARTED.md) — assumes nothing, twenty minutes, no hardware |
-| What it does and what counts as working | [FUNCTIONAL_SPEC.md](docs/FUNCTIONAL_SPEC.md) — actors, FR-1…FR-10, acceptance criteria |
-| Writing code against it | [TECHNICAL_REFERENCE.md](docs/TECHNICAL_REFERENCE.md) — module by module, every artefact field |
-| Why it is shaped this way | [ARCHITECTURE.md](docs/ARCHITECTURE.md) — the argument, and what was rejected |
-| The method behind the numbers | [METHOD.md](docs/METHOD.md) — run order, integration, the throttle rule |
-| The artefact format | [REPORT_FORMAT.md](docs/REPORT_FORMAT.md) — `report/v1` and `energy-model/v1` |
-| Putting a real meter on a real board | [BARE_METAL.md](docs/BARE_METAL.md) — wiring, bus permissions, calibration |
-| What is defended and what is not | [THREAT_MODEL.md](docs/THREAT_MODEL.md) — adversaries P1–P3, residual risks R-1…R-5 |
+| Never used a terminal, want to see it work | [GETTING_STARTED.md](docs/GETTING_STARTED.md), assumes nothing, twenty minutes, no hardware |
+| What it does and what counts as working | [FUNCTIONAL_SPEC.md](docs/FUNCTIONAL_SPEC.md), actors, FR-1…FR-10, acceptance criteria |
+| Writing code against it | [TECHNICAL_REFERENCE.md](docs/TECHNICAL_REFERENCE.md), module by module, every artefact field |
+| Why it is shaped this way | [ARCHITECTURE.md](docs/ARCHITECTURE.md), the argument, and what was rejected |
+| The method behind the numbers | [METHOD.md](docs/METHOD.md), run order, integration, the throttle rule |
+| The artefact format | [REPORT_FORMAT.md](docs/REPORT_FORMAT.md), `report/v1` and `energy-model/v1` |
+| Putting a real meter on a real board | [BARE_METAL.md](docs/BARE_METAL.md), wiring, bus permissions, calibration |
+| What is defended and what is not | [THREAT_MODEL.md](docs/THREAT_MODEL.md), adversaries P1–P3, residual risks R-1…R-5 |
 | Every claim and the test that proves it | [CLAIM_MAP.md](docs/CLAIM_MAP.md) |
-| How the suite is organised | [TEST_STRATEGY.md](docs/TEST_STRATEGY.md) — five tiers and the gate |
+| How the suite is organised | [TEST_STRATEGY.md](docs/TEST_STRATEGY.md), five tiers and the gate |
 | Decisions and their cost | [docs/adr/](docs/adr/) |
 
 ---
@@ -170,7 +170,7 @@ part that says how much to believe it.
 ## The test harness
 
 Five tiers, each answering a different question. The tier a test belongs to is
-the directory it lives in, and the marker is applied from the path — so a test
+the directory it lives in, and the marker is applied from the path, so a test
 cannot be moved between tiers and keep an old label.
 
 ```
@@ -199,7 +199,7 @@ only attacks the system survives is a suite written after the fact.
   across devices. Two reports are comparable when their instruments, samplers
   and conditions agree, and the report carries all three so a reader can check.
 - **Not a model benchmark.** The workload is opaque to the harness by design. If
-  you want to know whether your quantisation helped, run it as the workload —
+  you want to know whether your quantisation helped, run it as the workload,
   the harness will not tell you what it was measuring.
 - **Not calibrated.** The uncertainty is propagated from what the instrument
   claims about itself. A meter that lies about its accuracy produces an error

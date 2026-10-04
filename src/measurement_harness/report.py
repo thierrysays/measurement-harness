@@ -2,7 +2,7 @@
 
 A measurement report is only useful to somebody who was not in the room. That
 means it has to carry the instrument, the conditions, the sampling strategy, the
-error bar and — the field this module exists to make unavoidable — whether any
+error bar and (the field this module exists to make unavoidable) whether any
 of it was actually measured.
 
 The digest covers the body and excludes the identifier derived from it, so a
@@ -31,7 +31,7 @@ class ReportProvenance:
     """Where the numbers came from. Read this before reading the numbers.
 
     ``kind`` is ``measured`` only when a real instrument was on a real rail.
-    Everything else — a synthetic source, a replayed trace, a model — is
+    Everything else (a synthetic source, a replayed trace, a model) is
     ``synthetic``, and downstream code is expected to branch on it.
     """
 

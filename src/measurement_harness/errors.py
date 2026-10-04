@@ -53,7 +53,7 @@ class InsufficientSamples(MeasurementError):
 class SyntheticResultRefused(MeasurementError):
     """A synthetic run was asked to stand in for a measured figure.
 
-    The harness will happily produce synthetic reports — they are how the
+    The harness will happily produce synthetic reports, they are how the
     pipeline is tested without hardware. It will not let one leave the building
     labelled as a measurement.
     """

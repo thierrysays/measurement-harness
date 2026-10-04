@@ -1,4 +1,4 @@
-# measurement-harness — project instructions
+# measurement-harness, project instructions
 
 A harness that measures power, latency and thermal behaviour under sustained
 load, on any device, through any instrument. The product of this repository is
@@ -9,7 +9,7 @@ load, on any device, through any instrument. The product of this repository is
 ```bash
 pip install -e ".[dev]"
 make test          # 111 tests across five tiers, ~5s
-make smoke         # 5 tests, ~1s — run this first on a new machine
+make smoke         # 5 tests, ~1s: run this first on a new machine
 make demo          # a synthetic six-minute soak, in simulated time
 make qa            # ruff, strict mypy, bandit, pip-audit, coverage >= 90%
 python -m pytest tests/unit/test_thermal.py -k noise    # single test
@@ -48,7 +48,7 @@ python -m pytest -m pentest                             # one tier
 | `docs/CLAIM_MAP.md` | Claim → implementation → the test that proves it. |
 | `docs/TEST_STRATEGY.md` | The five tiers and what each is for. |
 
-## Invariants — do not break these without an ADR
+## Invariants, do not break these without an ADR
 
 1. **A synthetic run never leaves labelled as measured.** `provenance.kind` comes
    from the instrument, not the caller. `export_energy_model` refuses unless
@@ -69,17 +69,17 @@ python -m pytest -m pentest                             # one tier
 ## The delivery standard
 
 Every deliverable in this repository ships with all of the following. This is the
-standing default, not a per-task decision — a change that adds behaviour without
+standing default, not a per-task decision, a change that adds behaviour without
 its documentation and its tiers is unfinished, not fast.
 
-1. **Technical documentation** — module by module, every artefact field.
-2. **Functional documentation** — actors, numbered requirements, acceptance
+1. **Technical documentation**: module by module, every artefact field.
+2. **Functional documentation**: actors, numbered requirements, acceptance
    criteria, written so someone who never reads the source can check a claim.
-3. **A neophyte path** — a guide assuming no terminal, no Python, no git.
-4. **A bare-metal run** — how it works on real hardware with no container.
-5. **A full test harness** — smoke, unit, functional, security and pen-test
+3. **A neophyte path**: a guide assuming no terminal, no Python, no git.
+4. **A bare-metal run**: how it works on real hardware with no container.
+5. **A full test harness**: smoke, unit, functional, security and pen-test
    tiers, each selectable, each with a stated purpose.
-6. **A QA gate** — lint, strict types, SAST, dependency advisories, coverage.
+6. **A QA gate**: lint, strict types, SAST, dependency advisories, coverage.
    Everything in it fails the build.
 7. **A threat model with residual risks**, each pinned by a test that
    demonstrates the gap rather than hiding it.
@@ -87,8 +87,8 @@ its documentation and its tiers is unfinished, not fast.
 ## Repository metadata
 
 **Every repository carries `glossolalie-advisory` as a topic.** It is the common
-tag across the whole portfolio — the one that makes the family findable from a
-single search — and it sits alongside the repository's own descriptive topics
+tag across the whole portfolio (the one that makes the family findable from a
+single search) and it sits alongside the repository's own descriptive topics
 rather than replacing them. A new repository is not finished until it has it.
 
 The rest of the topic list describes *this* repository: what it does, what it
@@ -120,7 +120,7 @@ what it costs. Keep the register.
 
 - `InlineSampler` is blind to peak draw during a unit of work. That is
   structural, documented, and the reason `ThreadedSampler` exists. Do not
-  "fix" it by having the session poll mid-invocation on real hardware — it
+  "fix" it by having the session poll mid-invocation on real hardware, it
   cannot.
 - `SyntheticInstrument` models an *averaging* meter: each reading is the mean
   since the previous one. Removing that makes the inline sampler read pure idle
@@ -133,5 +133,5 @@ what it costs. Keep the register.
 1. Port `ina219.py` against the part. The porting note in the module is the
    specification; the calibration register value must reach `settings`.
 2. Replace one estimate downstream with a measured figure and record the gap.
-3. Characterise model load and warm-up as their own phase — currently excluded
+3. Characterise model load and warm-up as their own phase: currently excluded
    from both baseline and load window, and not measured at all.

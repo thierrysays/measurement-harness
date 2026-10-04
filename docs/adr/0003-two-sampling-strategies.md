@@ -1,4 +1,4 @@
-# ADR 0003 — Two samplers, and the report says which
+# ADR 0003, Two samplers, and the report says which
 
 **Status:** accepted · 2026-08-21
 
@@ -22,7 +22,7 @@ instruments. Record `provenance.sampler` in every report.
 ## Cost
 
 Two code paths for sampling, and two classes of report whose `peak_watts` must
-not be compared. The alternative — one sampler — meant either an untestable
+not be compared. The alternative (one sampler) meant either an untestable
 harness or a harness that cannot see peaks, and both were worse.
 
 ## Consequence

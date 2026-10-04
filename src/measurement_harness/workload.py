@@ -4,7 +4,7 @@ A workload here is anything with a unit of work that can be invoked repeatedly:
 one inference, one frame, one classification, one control loop iteration. The
 harness times each invocation and integrates power across the whole run. It does
 not know or care whether the work is a vision model, a Kalman filter, or a busy
-loop — which is what keeps the harness device-agnostic.
+loop, which is what keeps the harness device-agnostic.
 
 Sustained load is the point. A single inference tells you almost nothing that
 matters operationally: the interesting figures are what happens in minute four,

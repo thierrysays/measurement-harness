@@ -30,7 +30,7 @@ not intrusion; it is **a wrong number being believed**.
 
 ## What is defended, and by what
 
-### P1 — the author edits the file
+### P1, the author edits the file
 
 | Attack | Control | Pinned by |
 |---|---|---|
@@ -42,7 +42,7 @@ not intrusion; it is **a wrong number being believed**.
 | Reorder keys to disguise an edit | Canonical serialisation | `test_reordering_keys_does_not_forge_a_different_report` |
 | Present a report under a schema the reader does not know | Schema checked before the digest is believed | `test_an_unknown_schema_is_refused_before_the_digest_is_believed` |
 
-### P2 — the instrument or workload lies
+### P2, the instrument or workload lies
 
 | Attack | Control | Pinned by |
 |---|---|---|
@@ -52,7 +52,7 @@ not intrusion; it is **a wrong number being believed**.
 | A driver returns plausible numbers without hardware | `UnportedInstrument` raises | `test_an_unported_driver_refuses_to_open_and_says_what_is_missing` |
 | An instrument is read before it is opened | `InstrumentNotPresent` | `test_reading_before_opening_is_an_error_not_a_zero` |
 
-### P3 — the consumer drops the qualification
+### P3, the consumer drops the qualification
 
 | Attack | Control | Pinned by |
 |---|---|---|
@@ -75,7 +75,7 @@ not intrusion; it is **a wrong number being believed**.
 
 Accepted, not deferred. Each is pinned by a test that demonstrates the gap.
 
-### R-1 — The harness cannot audit its instrument
+### R-1, The harness cannot audit its instrument
 
 A driver that halves every reading produces a report that verifies and exports
 as measured. No software control detects it. The mitigation is a bench
@@ -84,32 +84,32 @@ procedure: calibrate against a second meter, on a known load, and record both in
 
 *Pinned by* `test_an_instrument_that_understates_current_is_believed`.
 
-### R-2 — A fully recomputed forgery is undetectable from the file alone
+### R-2, A fully recomputed forgery is undetectable from the file alone
 
 The digest detects editing, not authorship. Anyone who edits a report *and*
 recomputes the identifier produces a file that verifies. Nothing here signs,
 because choosing a key story belongs to whoever runs the bench.
 
-Closing it means a signature over the report body — the shape is already there,
-`report_id` is over everything else — plus a trust store on the reader's side.
+Closing it means a signature over the report body (the shape is already there,
+`report_id` is over everything else) plus a trust store on the reader's side.
 Until then, a report is evidence to somebody who trusts the bench.
 
 *Pinned by* `test_a_fully_recomputed_forgery_is_undetectable_from_the_file_alone`.
 
-### R-3 — Conditions are declared, not observed
+### R-3, Conditions are declared, not observed
 
 `conditions` is free-form and unverified. Ambient temperature, cooling and
 firmware version are whatever the operator typed. A run taken in a cold room can
 be labelled as one taken in a warm one.
 
-### R-4 — Threaded sampling is at the mercy of the scheduler
+### R-4, Threaded sampling is at the mercy of the scheduler
 
 `ThreadedSampler` targets a rate and does not guarantee it. Under load its gaps
 widen, which is visible in `max_gap_s` and nowhere else. Sample-rate starvation
 degrades the integral silently in the sense that nothing refuses; it degrades it
 *visibly* in the sense that the field is in the report.
 
-### R-5 — Comparability across reports is the reader's problem
+### R-5, Comparability across reports is the reader's problem
 
 Two reports with different samplers, instruments or conditions may not be
 comparable. The harness records all three and refuses nothing, because sometimes

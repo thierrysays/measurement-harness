@@ -3,7 +3,7 @@
 This exists for the same reason the simulated cell exists in a governance
 project: waiting for hardware produces software shaped by whatever the first
 board made easy. It is emphatically not a model of any real device, and it says
-so — its identity carries ``provenance="synthetic"``, which
+so, its identity carries ``provenance="synthetic"``, which
 :mod:`~measurement_harness.energy_model` refuses to convert into a downstream
 figure unless the caller asks for it in as many words.
 
@@ -13,8 +13,8 @@ produce byte-identical reports, which is what makes the report format testable.
 It models an **averaging** instrument: each reading is the mean current since the
 previous reading, weighted by how much of that interval the device spent loaded.
 That is what a shunt monitor with a multi-sample averaging window actually
-reports, and it is what lets an inline sampler — which by construction never
-reads during a unit of work — still produce a defensible energy integral here.
+reports, and it is what lets an inline sampler (which by construction never
+reads during a unit of work) still produce a defensible energy integral here.
 No such luck on real hardware, which is why :class:`~..session.ThreadedSampler`
 exists.
 """
@@ -68,7 +68,7 @@ class SyntheticInstrument:
     ) -> None:
         self.profile = profile or SyntheticProfile()
         self._seed = seed
-        # nosec B311 — a seeded Mersenne Twister is exactly what is wanted here.
+        # nosec B311, a seeded Mersenne Twister is exactly what is wanted here.
         # This generator produces measurement *noise* for a source that is
         # labelled synthetic and refused downstream; reproducibility from a seed
         # is the requirement, and unpredictability would defeat it.
@@ -110,7 +110,7 @@ class SyntheticInstrument:
 
     def open(self) -> None:
         self._open = True
-        self._rng = random.Random(self._seed)  # nosec B311 — see __init__
+        self._rng = random.Random(self._seed)  # nosec B311, see __init__
         self._mark = self._clock.monotonic()
         self._busy_s = 0.0
         self._interval_s = 0.0

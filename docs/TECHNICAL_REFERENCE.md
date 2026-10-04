@@ -25,7 +25,7 @@ Key order does not affect the digest. Unicode is not normalised.
 
 ### `clock.py`
 
-`Clock` protocol — `monotonic()` and `sleep()` — with `SystemClock` and
+`Clock` protocol (`monotonic()` and `sleep()`) with `SystemClock` and
 `ManualClock`. Nothing calls `time.monotonic()` directly. `ManualClock.sleep`
 advances simulated time instead of blocking, which is what makes a six-minute
 soak a unit test.
@@ -57,14 +57,14 @@ class Instrument(Protocol):
     def close(self) -> None: ...
 ```
 
-`Sample(t_s, volts, amps)` — power is derived, not stored, because a rail
+`Sample(t_s, volts, amps)`, power is derived, not stored, because a rail
 sagging under load explains most throughput cliffs and is invisible in watts.
 
 `InstrumentIdentity` carries `kind`, `description`, `provenance`
 (`measured` | `synthetic`), `accuracy_pct`, `resolution_a`, `sample_rate_hz` and
 a free-form `settings` dict for shunt value, address, gain, serial.
 
-`UnportedInstrument` — subclass, set `identity_` and `porting_note`, and every
+`UnportedInstrument`, subclass, set `identity_` and `porting_note`, and every
 `open()`/`read()` raises `NotPortedError`.
 
 ### `instruments/synthetic.py`
@@ -101,7 +101,7 @@ class Workload(Protocol):
 
 ### `session.py`
 
-`SessionSpec` — `device`, `idle_s`, `windows`, `window_s`, `sample_interval_s`,
+`SessionSpec`, `device`, `idle_s`, `windows`, `window_s`, `sample_interval_s`,
 `throttle_threshold`, optional `thermometer`, free-form `conditions`.
 
 `Sampler` protocol with two implementations:
@@ -118,15 +118,15 @@ class Workload(Protocol):
 
 ### `metrics.py`
 
-`integrate_energy(samples, identity) -> EnergyResult` — trapezoidal, over actual
+`integrate_energy(samples, identity) -> EnergyResult`, trapezoidal, over actual
 timestamps. Raises on fewer than two samples and on non-monotonic time.
 `EnergyResult` carries `joules`, `joules_uncertainty`, `mean_watts`,
 `peak_watts`, `min_watts`, `duration_s`, `sample_count`, `max_gap_s`.
 
 Uncertainty: `joules × accuracy_pct/100 + resolution_a × mean_volts × duration`.
 
-`LatencySummary.from_latencies(...)` — nearest-rank percentiles, so every quoted
-figure occurred. `energy_above_idle(result, idle_watts)` — clamped at zero.
+`LatencySummary.from_latencies(...)`, nearest-rank percentiles, so every quoted
+figure occurred. `energy_above_idle(result, idle_watts)`, clamped at zero.
 
 ### `thermal.py`
 
@@ -193,4 +193,4 @@ uncertainty or state that it has none, and must appear in
 [REPORT_FORMAT.md](REPORT_FORMAT.md) in the same change.
 
 **A new artefact**: new schema identifier, new version, never an edit to an
-existing one — both identifiers are inside hashed bodies.
+existing one, both identifiers are inside hashed bodies.

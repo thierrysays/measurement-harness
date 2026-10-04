@@ -1,4 +1,4 @@
-# ADR 0002 — A synthetic run cannot be exported as a measurement
+# ADR 0002, A synthetic run cannot be exported as a measurement
 
 **Status:** accepted · 2026-08-21
 
@@ -6,7 +6,7 @@
 
 The harness must be usable before any instrument exists, or it will be shaped by
 whatever the first meter made easy. That means a synthetic source producing
-plausible numbers — and plausible numbers, once written to a file, get believed.
+plausible numbers, and plausible numbers, once written to a file, get believed.
 
 The failure is not hypothetical: an estimate propagated into a downstream table,
 carried through two systems, and quoted back as a measured figure is how most

@@ -25,7 +25,7 @@ efficiency claims, or deciding whether a workload should run.
 | Actor | Does | Cannot |
 |---|---|---|
 | **Bench operator** | Wires the instrument, declares the conditions, runs the session | Make a synthetic run export as measured |
-| **Instrument** | Reports volts and amps when asked | Be audited by the harness — see R-1 |
+| **Instrument** | Reports volts and amps when asked | Be audited by the harness, see R-1 |
 | **Workload** | Performs one unit of work per `invoke()` | Supply its own latency figures |
 | **Report consumer** | Reads a report, verifies its digest, uses the export | Be required to trust the machine that wrote it, for *integrity* |
 | **Downstream system** | Copies an energy figure into its own table | Receive a number without the sentence qualifying it |
@@ -51,14 +51,14 @@ refusal with a code, not a warning.
 
 ## Functional requirements
 
-### FR-1 — A report states the conditions it was taken under
+### FR-1, A report states the conditions it was taken under
 
 Instrument identity, session specification, ambient conditions, sampler kind and
 harness version are all present in every report.
 
 *Verified by* `test_fr1_a_run_records_the_conditions_it_was_taken_under`.
 
-### FR-2 — The quoted energy figure excludes the idle floor
+### FR-2, The quoted energy figure excludes the idle floor
 
 An idle baseline is measured before the workload is prepared. The headline
 per-operation figure is energy **above idle**; the total is also present, and
@@ -66,7 +66,7 @@ larger.
 
 *Verified by* `test_fr2_the_quoted_figure_excludes_the_idle_floor`.
 
-### FR-3 — Sustained load is windowed and assessed
+### FR-3, Sustained load is windowed and assessed
 
 The load phase is divided into equal windows, each carrying its own throughput,
 mean power, mean latency and peak temperature. A verdict compares the first
@@ -75,7 +75,7 @@ window against the sustained tail.
 *Verified by* `test_fr3_a_sustained_run_is_windowed_and_assessed` and
 `test_fr3_a_run_that_holds_its_throughput_is_not_flagged`.
 
-### FR-4 — A report can be verified by someone who did not produce it
+### FR-4, A report can be verified by someone who did not produce it
 
 `mh verify` recomputes the digest over the canonical form of the body. It shares
 no state with the writer beyond the canonicalisation rules, and exits non-zero on
@@ -84,7 +84,7 @@ a mismatch.
 *Verified by* `test_fr4_a_report_can_be_verified_by_someone_who_did_not_produce_it`
 and `test_fr4_verification_fails_loudly_on_an_altered_report`.
 
-### FR-5 — A synthetic run cannot be exported as a measurement
+### FR-5, A synthetic run cannot be exported as a measurement
 
 `mh energy-model` refuses a report whose provenance is not `measured`. With
 `--allow-synthetic` it proceeds, and the exported `source` says
@@ -92,14 +92,14 @@ and `test_fr4_verification_fails_loudly_on_an_altered_report`.
 
 *Verified by* `test_fr5_a_synthetic_run_cannot_be_exported_as_a_measurement`.
 
-### FR-6 — An unported instrument refuses rather than inventing readings
+### FR-6, An unported instrument refuses rather than inventing readings
 
 A driver written from a datasheet and never run against the part raises, and no
 report is written.
 
 *Verified by* `test_fr6_an_instrument_that_has_never_run_refuses_to_produce_readings`.
 
-### FR-7 — A run is reproducible from its inputs
+### FR-7, A run is reproducible from its inputs
 
 The same seed, spec and workload produce the same figures and the same report
 identifier.
@@ -107,14 +107,14 @@ identifier.
 *Verified by* `test_fr7_the_same_inputs_produce_the_same_figures` and
 `test_fr7_two_identical_runs_digest_identically`.
 
-### FR-8 — Every energy figure carries an error bar
+### FR-8, Every energy figure carries an error bar
 
 Rated accuracy as a proportional term, resolution as an absolute floor. An
 instrument that declares neither gets zero, and the instrument block shows why.
 
 *Verified by* `test_fr8_a_report_carries_an_error_bar_or_says_it_has_none`.
 
-### FR-9 — The export carries the sentence, not just the number
+### FR-9, The export carries the sentence, not just the number
 
 `source` names the instrument, the device, the operation count, the basis, the
 originating report digest, whether throughput regressed, and which actions were
@@ -123,7 +123,7 @@ scaled rather than measured.
 *Verified by* `test_fr9_the_export_carries_the_sentence_not_just_the_number` and
 `test_fr9_a_scaled_action_is_never_described_as_measured`.
 
-### FR-10 — A report round-trips through a file unchanged
+### FR-10, A report round-trips through a file unchanged
 
 Writing and reading does not change what a report says or what it digests to.
 
